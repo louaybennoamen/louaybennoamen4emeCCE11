@@ -1,12 +1,12 @@
-package tn.esprit.louaybennoamen4emecce11;
+package tn.esprit.louaybennoamen4emecce11.domaine;
 
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import tn.esprit.louaybennoamen4emecce11.domaine.Vehicule;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,20 +23,26 @@ public class Agence {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idAgence;
 
+    @NotBlank(message = "Le nom est obligatoire")
     @Column(nullable = false, length = 100)
     private String nom;
 
+    @NotBlank(message = "La ville est obligatoire")
     @Column(nullable = false, length = 50)
     private String ville;
 
+    @NotBlank(message = "L'adresse est obligatoire")
     @Column(nullable = false, length = 150)
     private String adresse;
 
     @Column(length = 20)
     private String telephone;
+
+    @JsonIgnore
     @OneToMany(mappedBy = "agence")
     private List<Employe> employes = new ArrayList<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "agence")
     private List<Vehicule> vehicules = new ArrayList<>();
 }
